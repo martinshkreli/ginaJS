@@ -8,13 +8,13 @@ module.exports = {
 			option
 				.setName('question')
 				.setDescription('Ask Gina a question')
-				.setRequired(true)),
+				.setRequired(true))
 		
 		.addStringOption(option => 
 			option
 				.setName('temperature')
 				.setDescription('Provide a temperature')
-				.setRequired(false)
+				.setRequired(false)),
 
 			
 	async execute(interaction, response) {
