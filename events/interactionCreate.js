@@ -12,9 +12,9 @@ module.exports = {
 			apiKey: process.env.OPENAIKEY,
 		});
 		
-		async function runIt(parameter) {
+		async function runIt(parameter, temperature = 0.8) {
 			let prompt = `${parameter}`;
-
+			let temperature = Math.min(Math.max(temperature, 0), 1);
 			var payload = {
 				'method': 'POST',
 				'url': 'https://api.openai.com/v1/completions',
@@ -26,7 +26,7 @@ module.exports = {
 					'model': 'text-davinci-003',
 				"prompt": prompt,
 				"max_tokens": 3500,
-				"temperature": 0.8,
+				"temperature": temperature,
 				})
 			};
 			return new Promise(function (resolve, reject) {
