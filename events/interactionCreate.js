@@ -12,21 +12,22 @@ module.exports = {
 			apiKey: process.env.OPENAIKEY,
 		});
 		
-		async function runIt(parameter) {
+		async function runIt(parameter, temperature = 0.8) {
 			let prompt = `${parameter}`;
-
+			temperature = Math.max(Math.min(temperature,1),0);
+		
 			var payload = {
 				'method': 'POST',
 				'url': 'https://api.openai.com/v1/completions',
 				'headers': {
-				'Content-Type': 'application/json',
-				'Authorization': `Bearer ${process.env.OPENAIKEY}`,
+					'Content-Type': 'application/json',		
+					'Authorization': `Bearer ${process.env.OPENAIKEY}`,
 				},
 				'body': JSON.stringify({
 					'model': 'text-davinci-003',
-				"prompt": prompt,
-				"max_tokens": 3500,
-				"temperature": 0.8,
+					"prompt": prompt,
+					"max_tokens": 3500,
+					"temperature": temperature,
 				})
 			};
 			return new Promise(function (resolve, reject) {
