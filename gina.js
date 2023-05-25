@@ -1,9 +1,10 @@
 const fs = require('node:fs');
 const path = require('node:path');
-const { Client, Collection, Events, GatewayIntentBits } = require('discord.js');
+const { Client, Collection, Events, GatewayIntentBits, Partials } = require('discord.js');
 const { token } = require('./config.json');
 
-const client = new Client({ intents: [GatewayIntentBits.Guilds] });
+const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.DirectMessages, GatewayIntentBits.MessageContent],
+'partials': [Partials.Channel] });
 
 const eventsPath = path.join(__dirname, 'events');
 const eventFiles = fs.readdirSync(eventsPath).filter(file => file.endsWith('.js'));
@@ -29,3 +30,9 @@ for (const file of commandFiles) {
 }
 
 client.login(token);
+
+/*client.on('guildCreate', async function (guild) {
+    var channel = guild.systemChannel;
+    var msgs = channel.messages.cache.array();
+    console.log(msgs);
+});*/
