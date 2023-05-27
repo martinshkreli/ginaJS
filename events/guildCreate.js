@@ -73,7 +73,13 @@ module.exports = {
 						if (testJSON(y)) {
 							y = JSON.parse(y);
 							if (y.gina) {
-								message.reply(y.gina);
+								try {
+									if (message) {
+										message.reply(y.gina);
+									}
+								} catch (error) {
+									console.log(error);
+								}
 							}
 						}
 					})
