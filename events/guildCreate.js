@@ -60,9 +60,13 @@ module.exports = {
 		fetch(`http://127.0.0.1:5000`, {
 			method: 'POST',
 			headers: {
-				'Content-Type': 'application/json',
+				'Accept': 'application/json',
+				'Content-Type': 'application/json'
 			},
-			body: JSON.stringify({message: `${message.author.username}: ${message}`}),
+			body: JSON.stringify({
+				text: `${message.author.username}: ${message}`,
+				id: message.id
+			})
 		}).then((x) => {
 			if (typeof(x) == 'object') {
 				if (JSON.stringify(x).includes('doctype')) {
@@ -74,8 +78,11 @@ module.exports = {
 							y = JSON.parse(y);
 							if (y.gina) {
 								try {
-									if (message) {
+									if (message.id == y.id) {
+										console.log('matched');
 										message.reply(y.gina);
+									} else {
+										console.log('message mismatch')
 									}
 								} catch (error) {
 									console.log(error);
